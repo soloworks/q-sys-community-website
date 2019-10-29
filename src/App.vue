@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div :class="$style['background-gradient']"></div>
     <div :class="$style['header']">
       <img
         :class="$style['q-sys-logo']"
@@ -15,7 +16,7 @@
       alt="Solo Works"
     />
     <p :class="$style['coming-soon-text']">Coming soon</p>
-    <div :class="$style['foreground']"></div>
+    <div :class="$style['foreground-gradient']"></div>
   </div>
 </template>
 
@@ -70,21 +71,21 @@ $gu: 0.8vh;
   margin: 0;
 }
 
-html {
-  animation: background-color 10s infinite alternate;
-}
-body {
-  background: linear-gradient(135deg, transparent, hsla(240, 50%, 10%, 1));
-}
-
 :global(#app) {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   align-items: center;
+  animation: background-color 10s infinite alternate;
   display: flex;
   flex-direction: column;
   height: 100vh;
   justify-content: center;
+}
+.background-gradient {
+  background: linear-gradient(135deg, transparent, hsla(240, 50%, 10%, 1));
+  height: 100vh;
+  position: absolute;
+  width: 100vw;
 }
 .header {
   animation: enter-high-opacity 2s 1s both;
@@ -117,7 +118,7 @@ body {
   animation: enter-high-opacity 2s 5s both;
   font-size: 4 * $gu;
 }
-.foreground {
+.foreground-gradient {
   background: linear-gradient(135deg, transparent, hsla(240, 50%, 10%, 0.25));
   height: 100vh;
   position: absolute;
