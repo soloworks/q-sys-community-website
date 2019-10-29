@@ -1,4 +1,4 @@
-# q-sys-community-website
+# Q-SYS Community Website
 
 ## Development
 
