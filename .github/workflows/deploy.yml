@@ -31,7 +31,12 @@ jobs:
         env:
           GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
 
+      - name: Set up gsutil
+        run: |
+          curl https://sdk.cloud.google.com | bash
+          exec -l $SHELL
+          gcloud init
+          gcloud config set project ${{ secrets.GCLOUD_PROJECT }}
+
       - name: Upload to Google Cloud Storage
-        uses: actions/gcloud/cli@master
-        with:
-          args: gsutil -m cp -r -z "css,html,js" dist/* ${{ secrets.GSUTIL_BUCKET_LINK }}/_www
+        run: gsutil -m cp -r -z "css,html,js" dist/* ${{ secrets.GSUTIL_BUCKET_LINK }}/_www
