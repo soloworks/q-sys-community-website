@@ -31,14 +31,9 @@ jobs:
         env:
           GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
 
-      - name: Set up gsutil
-        run: |
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-          apt-get install apt-transport-https ca-certificates
-          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-          sudo apt-get update && sudo apt-get install google-cloud-sdk
-          gcloud init
-          gcloud config set project ${{ secrets.GCLOUD_PROJECT }}
-
       - name: Upload to Google Cloud Storage
-        run: gsutil -m cp -r -z "css,html,js" dist/* ${{ secrets.GSUTIL_BUCKET_LINK }}/_www
+        uses: docker://gcr.io/cloud-builders/gsutil
+        with:
+          args: -m cp -r -z "css,html,js" dist/* ${{ secrets.GSUTIL_BUCKET_LINK }}/_www
+        env:
+          CLOUDSDK_CORE_PROJECT: ${{ secrets.GCLOUD_PROJECT }}
