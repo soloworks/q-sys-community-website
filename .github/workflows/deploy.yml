@@ -1,0 +1,37 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Node.js
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.13.0'
+
+      - name: Install specific npm version
+        run: npm install --global npm@6.12.0
+
+      - name: Check out repository
+        uses: actions/checkout@v1
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build website
+        run: npm run build
+
+      - name: Authenticate into Google Cloud Platform
+        uses: actions/gcloud/auth@master
+        env:
+          GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
+
+      - name: Upload to Google Cloud Storage
+        uses: actions/gcloud/cli@master
+        with:
+          args: gsutil -m cp -r -z "css,html,js" dist/* ${{ secrets.GSUTIL_BUCKET_LINK }}/_www
