@@ -4,18 +4,28 @@
     <div :class="$style['header']">
       <img
         :class="$style['q-sys-logo']"
-        src="@/assets/logo-q-sys.png"
-        alt="Q-SYS"
+        src="@/assets/q-sys-logo.png"
+        alt="Q-SYS logo"
       />
       <p :class="$style['community-text']">Community</p>
     </div>
     <p :class="$style['from-text']">from</p>
     <img
       :class="$style['solo-works-logo']"
-      src="@/assets/logo-solo-works.png"
-      alt="Solo Works"
+      src="@/assets/solo-works-logo.png"
+      alt="Solo Works logo"
     />
-    <p :class="$style['coming-soon-text']">Coming soon</p>
+    <div :class="$style['footer']">
+      <p :class="$style['coming-soon-text']">Coming soon</p>
+      <a
+        :class="$style['github-link']"
+        href="https://github.com/q-sys-community"
+        rel="noopener"
+        target="_blank"
+      >
+        <img src="@/assets/github-mark.svg" alt="Q-SYS Community on GitHub" />
+      </a>
+    </div>
     <div :class="$style['foreground-gradient']"></div>
   </div>
 </template>
@@ -40,10 +50,10 @@ $gu: 0.8vh;
 
 @keyframes background-color {
   from {
-    background-color: hsl(195, 50%, 50%);
+    background-color: hsl(205, 50%, 50%);
   }
   to {
-    background-color: hsl(180, 75%, 50%);
+    background-color: hsl(190, 75%, 50%);
   }
 }
 @keyframes enter-high-opacity {
@@ -113,14 +123,30 @@ $gu: 0.8vh;
   height: 24 * $gu;
   margin-bottom: 16 * $gu;
 }
+.footer {
+  animation: enter-high-opacity 2s 5s both;
+  text-align: center;
+}
 .coming-soon-text {
   @extend %text;
-  animation: enter-high-opacity 2s 5s both;
   font-size: 4 * $gu;
+  margin-bottom: 4 * $gu;
+}
+.github-link {
+  opacity: 0.75;
+  transition: opacity 0.5s;
+
+  &:hover {
+    opacity: 1;
+  }
+  & > img {
+    height: 5 * $gu;
+  }
 }
 .foreground-gradient {
   background: linear-gradient(135deg, transparent, hsla(240, 50%, 10%, 0.25));
   height: 100vh;
+  pointer-events: none;
   position: absolute;
   width: 100vw;
 }
