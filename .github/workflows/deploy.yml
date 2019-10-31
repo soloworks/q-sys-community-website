@@ -31,6 +31,13 @@ jobs:
         env:
           GCLOUD_AUTH: ${{ secrets.GCLOUD_AUTH }}
 
+      - name: Clean Google Cloud Storage website directory
+        uses: docker://gcr.io/cloud-builders/gsutil
+        with:
+          args: -m rm -r ${{ secrets.GSUTIL_BUCKET_LINK }}/_www
+        env:
+          CLOUDSDK_CORE_PROJECT: ${{ secrets.GCLOUD_PROJECT }}
+
       - name: Upload to Google Cloud Storage
         uses: docker://gcr.io/cloud-builders/gsutil
         with:
